@@ -1,0 +1,73 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (product(); as productRef) {
+      <div>
+        <h2 data-cy="productDetailsHeading"><span jhiTranslate="onlineStoreApp.product.detail.title">Product</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productRef.id }}</span>
+          </dd>
+          <dt>
+            <span [ngbTooltip]="'onlineStoreApp.product.help.name' | translate" jhiTranslate="onlineStoreApp.product.name">Name</span>
+          </dt>
+          <dd>
+            <span>{{ productRef.name }}</span>
+          </dd>
+          <dt><span jhiTranslate="onlineStoreApp.product.description">Description</span></dt>
+          <dd>
+            <span>{{ productRef.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="onlineStoreApp.product.price">Price</span></dt>
+          <dd>
+            <span>{{ productRef.price }}</span>
+          </dd>
+          <dt><span jhiTranslate="onlineStoreApp.product.sizeType">Size Type</span></dt>
+          <dd>
+            <span [jhiTranslate]="'onlineStoreApp.Size.' + (productRef.sizeType ?? 'null')">{{
+              { null: '', S: 'S', M: 'M', L: 'L', XL: 'XL', XXL: 'XXL' }[productRef.sizeType ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="onlineStoreApp.product.image">Image</span></dt>
+          <dd>
+            @if (productRef.image) {
+              <div>
+                <a (click)="openFile(productRef.image ?? '', productRef.imageContentType)">
+                  <img
+                    [src]="'data:' + productRef.imageContentType + ';base64,' + productRef.image"
+                    style="max-width: 100%"
+                    alt="product"
+                  />
+                </a>
+                {{ productRef.imageContentType }}, {{ byteSize(productRef.image ?? '') }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="onlineStoreApp.product.productCategory">Product Category</span></dt>
+          <dd>
+            @if (product()!.productCategory) {
+              <div>
+                <a [routerLink]="['/product-category', product()!.productCategory?.id, 'view']">{{ productRef.productCategory?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product', productRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

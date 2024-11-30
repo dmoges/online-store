@@ -1,0 +1,110 @@
+<div>
+  <h2 id="page-heading" data-cy="ProductHeading">
+    <span jhiTranslate="onlineStoreApp.product.home.title">Products</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="onlineStoreApp.product.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-product"
+        [routerLink]="['/product/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="onlineStoreApp.product.home.createLabel">Create a new Product</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (products?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="onlineStoreApp.product.home.notFound">No Products found</span>
+    </div>
+  }
+
+  @if (products && products.length > 0) {
+    <div class="mb-2 d-flex justify-content-end align-items-center">
+      <span class="mr-2 col-2">Filter by name</span>
+      <input type="search" class="form-control" [(ngModel)]="filter" />
+      <span class="mx-2 col-1">Sort by</span>
+      <!--div class="btn-group" role="group">
+        <button type="button" class="btn btn-light" jhiSortBy="name">
+          <span class="d-flex">
+            <span jhiTranslate="onlineStoreApp.product.name">Name</span>&nbsp;
+            <fa-icon icon="sort"></fa-icon>
+          </span>
+        </button>
+      </div-->
+    </div>
+    <div class="list-group" id="entities">
+      @for (product of products; track trackId(product)) {
+        <a class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="row">
+            <div class="col-2 col-xs-12 justify-content-center">
+              <img [src]="'data:' + product.imageContentType + ';base64,' + product.image" style="max-height: 150px" alt="product image" />
+            </div>
+            <div class="col col-x-12">
+              <div class="d-flx w-100 justify-content-between">
+                <a [routerLink]="['/product', product.id, 'view']">
+                  <h5 class="mb-1">{{ product.name }}</h5>
+                </a>
+                @if (product.productCategory) {
+                  <small>
+                    <a [routerLink]="['/product-category', product.productCategory?.id, 'view']">
+                      Category: {{ product.productCategory?.name }}
+                    </a>
+                  </small>
+                }
+              </div>
+              <small class="mb-1">{{ product.description }}</small>
+              <p class="mb-1">Price: {{ product.price | currency: 'USD' }}</p>
+              <small>
+                Size:
+                <span jhiTranslate="{{ 'onlineStoreApp.Size.' + product.sizeType }}">
+                  {{ product.sizeType }}
+                </span>
+              </small>
+              <div>
+                <button type="submit" [routerLink]="['/product', product.id, 'edit']" class="btn-primary" btn="sm">
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                </button>
+                <button type="submit" (click)="delete(product)" class="btn-danger" btn="sm">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </a>
+      }
+    </div>
+  }
+  @if (products && products.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

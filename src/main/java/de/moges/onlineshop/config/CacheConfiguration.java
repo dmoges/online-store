@@ -50,6 +50,18 @@ public class CacheConfiguration {
             createCache(cm, de.moges.onlineshop.domain.User.class.getName());
             createCache(cm, de.moges.onlineshop.domain.Authority.class.getName());
             createCache(cm, de.moges.onlineshop.domain.User.class.getName() + ".authorities");
+            createCache(cm, de.moges.onlineshop.domain.Product.class.getName());
+            createCache(cm, de.moges.onlineshop.domain.ProductCategory.class.getName());
+            createCache(cm, de.moges.onlineshop.domain.ProductCategory.class.getName() + ".products");
+            createCache(cm, de.moges.onlineshop.domain.Customer.class.getName());
+            createCache(cm, de.moges.onlineshop.domain.Customer.class.getName() + ".orders");
+            createCache(cm, de.moges.onlineshop.domain.ProductOrder.class.getName());
+            createCache(cm, de.moges.onlineshop.domain.ProductOrder.class.getName() + ".orderItems");
+            createCache(cm, de.moges.onlineshop.domain.ProductOrder.class.getName() + ".invoices");
+            createCache(cm, de.moges.onlineshop.domain.OrderItem.class.getName());
+            createCache(cm, de.moges.onlineshop.domain.Invoice.class.getName());
+            createCache(cm, de.moges.onlineshop.domain.Invoice.class.getName() + ".shipments");
+            createCache(cm, de.moges.onlineshop.domain.Shipment.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
