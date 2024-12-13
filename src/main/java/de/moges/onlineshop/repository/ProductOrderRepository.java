@@ -26,6 +26,8 @@ public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long
         return this.findAllWithToOneRelationships(pageable);
     }
 
+    Page<ProductOrder> findAllByCustomerUserLogin(String login, Pageable pageable);
+
     @Query(
         value = "select productOrder from ProductOrder productOrder left join fetch productOrder.customer",
         countQuery = "select count(productOrder) from ProductOrder productOrder"

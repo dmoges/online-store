@@ -1,6 +1,7 @@
 package de.moges.onlineshop.repository;
 
 import de.moges.onlineshop.domain.Product;
+import de.moges.onlineshop.domain.ProductOrder;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;

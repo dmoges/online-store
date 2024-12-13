@@ -2,6 +2,8 @@ package de.moges.onlineshop.service.impl;
 
 import de.moges.onlineshop.domain.ProductOrder;
 import de.moges.onlineshop.repository.ProductOrderRepository;
+import de.moges.onlineshop.security.AuthoritiesConstants;
+import de.moges.onlineshop.security.SecurityUtils;
 import de.moges.onlineshop.service.ProductOrderService;
 import de.moges.onlineshop.service.dto.ProductOrderDTO;
 import de.moges.onlineshop.service.mapper.ProductOrderMapper;
@@ -66,7 +68,17 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     @Transactional(readOnly = true)
     public Page<ProductOrderDTO> findAll(Pageable pageable) {
         LOG.debug("Request to get all ProductOrders");
-        return productOrderRepository.findAll(pageable).map(productOrderMapper::toDto);
+        //return productOrderRepository.findAll(pageable).map(productOrderMapper::toDto);
+
+        if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
+            return productOrderRepository.findAll(pageable).map(productOrderMapper::toDto);
+        } else {
+            /*
+            return productOrderRepository.findAllByCutomerUserLogin(SecurityUtils.getCurrentUserLogin().get(),pageable)
+            .map(productOrderMapper::toDto);
+             */
+            return productOrderRepository.findAll(pageable).map(productOrderMapper::toDto);
+        }
     }
 
     public Page<ProductOrderDTO> findAllWithEagerRelationships(Pageable pageable) {

@@ -70,6 +70,9 @@ public class Customer implements Serializable {
     @JsonIgnoreProperties(value = { "orderItems", "invoices", "customer" }, allowSetters = true)
     private Set<ProductOrder> orders = new HashSet<>();
 
+    @OneToOne
+    private User user;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {

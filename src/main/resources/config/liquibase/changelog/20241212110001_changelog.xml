@@ -1,0 +1,23 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="dmoges (generated)" id="1734001210510-4">
+        <addColumn tableName="customer">
+            <column name="user_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dmoges (generated)" id="1734001210510-5">
+        <addUniqueConstraint columnNames="user_id" constraintName="UC_CUSTOMERUSER_ID_COL" tableName="customer"/>
+    </changeSet>
+    <changeSet author="dmoges (generated)" id="1734001210510-6">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="customer" constraintName="FKg09blp5mmjq2s3vgngse5ug4a" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="dmoges (generated)" id="1734001210510-1">
+        <alterSequence incrementBy="50" sequenceName="sequence_generator"/>
+    </changeSet>
+    <changeSet author="dmoges (generated)" id="1734001210510-2">
+        <setTableRemarks tableName="product"/>
+    </changeSet>
+    <changeSet author="dmoges (generated)" id="1734001210510-3">
+        <modifyDataType columnName="email" newDataType="varchar(254)" tableName="jhi_user"/>
+    </changeSet>
+</databaseChangeLog>
