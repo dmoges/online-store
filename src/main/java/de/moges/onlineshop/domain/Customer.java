@@ -236,6 +236,19 @@ public class Customer implements Serializable {
         return this;
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
+    public Customer user(User user) {
+        this.setUser(user);
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
